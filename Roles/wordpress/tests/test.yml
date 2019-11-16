@@ -1,0 +1,8 @@
+---
+- name: install wordpress
+  hosts: "{{host}}"
+  become: yes
+  become_method: sudo
+  roles:
+    - wordpress
+

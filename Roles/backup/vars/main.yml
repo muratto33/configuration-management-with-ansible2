@@ -1,0 +1,4 @@
+---
+# vars file for talant-package
+r1soft_server_ip: "34.249.24.81"
+r1soft_server_port: "8080"

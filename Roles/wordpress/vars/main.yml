@@ -1,0 +1,4 @@
+---
+# vars file for talant-package
+wordpress_version: "5.2.1"
+host: all

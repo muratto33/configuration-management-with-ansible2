@@ -1,0 +1,6 @@
+---
+# handlers file for talant-package
+- name: restart-nrpe
+  systemd:
+    name: sbm-agent
+    state: restarted

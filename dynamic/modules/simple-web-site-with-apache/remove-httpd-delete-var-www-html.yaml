@@ -1,0 +1,20 @@
+---
+- name: clear servers
+  hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: stop service
+      service: name=httpd state=stopped enabled=no
+      ignore_errors: yes
+
+    - name: remove httpd package
+      yum: name=httpd  state=absent
+      ignore_errors: yes  
+
+    - name: remove index.html
+      file: path=/var/www/html/index.html  state=absent
+      ignore_errors: yes
+
+    - name: remove www/html folder
+      file: path=/var/www state=absent

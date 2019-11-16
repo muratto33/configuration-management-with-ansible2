@@ -1,0 +1,24 @@
+---
+- name: create a file and directory, assign to user talant
+  hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: add user talant
+      user:
+        name: talant
+        groups: wheel
+        append: yes
+
+    - name: create a file
+      file:
+        path: /tmp/talant-file.txt
+        state: touch
+        mode: u+r,g-rwx,o+rw 
+        owner: talant
+        
+    - lineinfile:
+        path: /tmp/talant-file.txt
+        line: 192.168.0.1  talantzon.com
+        create: yes
+        

@@ -1,0 +1,9 @@
+---
+# tasks file for talant-package
+- name: add users
+  user:
+    name: "{{item}}"
+  with_items:
+    - kapar
+    - aibek
+    - murat

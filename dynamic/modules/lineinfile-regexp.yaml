@@ -1,0 +1,19 @@
+---
+- name: change the content of the file
+  hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: change the content of the /tmp/talant-file.txt
+      lineinfile:
+        path: /tmp/talant-file.txt
+        regexp: '^10000'
+        line: 'new input'
+
+    - name: create a new folder talant-folder
+      file:
+        path: /tmp/talant-folder
+        state: directory
+        owner: talant
+        group: talant
+        mode: u=rwx,g=rx,o=rx

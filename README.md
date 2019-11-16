@@ -1,1 +1,1 @@
-# configuration-management-with-ansible2
+# configuration-management-with-ansible

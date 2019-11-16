@@ -1,0 +1,13 @@
+---
+# tasks file for talant-package
+- name: Install company packages
+  package:
+    name: "{{item}}"
+  with_items:
+    - telnet
+    - elinks
+    - wget
+    - lftp
+    - unzip 
+    - httpd
+

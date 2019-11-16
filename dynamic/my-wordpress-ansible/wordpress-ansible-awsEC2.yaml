@@ -1,0 +1,98 @@
+---
+- name: create a simple static website with apache
+  hosts: all
+  vars:
+    talant_db_user: talant
+    talant_db_password: talant@123
+    talant_wordpress_db: talant_db
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: install necessery packages
+      yum: 
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - httpd
+        - mariadb
+        - mariadb-server
+        - php
+        - php-mysql
+        - php-gd
+        - MySQL-python
+        - git-all
+        - python-devel
+        - unzip
+        - rsync
+ 
+    - name: start apache
+      service:
+        name: "{{item}}"
+        state: restarted
+      with_items:
+        - httpd
+
+ 
+      
+    - name: start and enable MariaDB
+      service:
+        name: "{{item}}"
+        state: started
+        enabled: yes
+      with_items:
+        - mariadb
+    
+    - name: create MySQL user
+      mysql_user:
+        user: '{{talant_db_user}}'
+        password: '{{talant_db_password}}'
+        priv: '*.*:ALL,GRANT'
+        state: present
+    
+    - name: create db for Wordpress
+      mysql_db:
+        name: '{{talant_wordpress_db}}'
+        state: present
+
+    - name: Reload Privileges
+      command: 'mysql -ne "{{item}}"'
+      with_items:
+        - FLUSH PRIVILEGES
+      changed_when: false
+
+   
+    - name: download latest wordpress
+      get_url:
+        url: https://wordpress.org/wordpress-5.1.1.zip
+        dest: /tmp/wordpress.zip
+
+    - name: unzip wordpress 
+      unarchive:
+        src: /tmp/wordpress.zip
+        dest: /tmp/
+        copy: no
+
+    - name: copy files within /tmp/wordpress to /var/www/html
+      copy:
+        src: /tmp/wordpress/
+        dest: /var/www/html/
+        owner: apache
+        group: apache
+        remote_src: yes
+
+    - name: copy wp-config.j2 file as wp-config.php
+      template: 
+        src: ./wp-config.j2
+        dest: /var/www/html/wp-config.php
+      
+      notify: 
+        - restart my apache
+    
+
+  handlers:
+    - name: restart my apache
+      service: name=httpd state=restarted
+
+
+
+

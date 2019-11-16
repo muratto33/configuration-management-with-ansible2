@@ -1,0 +1,15 @@
+- name: EC2 creates VPC on ohio region 
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: create VPC with tags
+      ec2_vpc_net:
+        name: talant_VPC_ohio
+        cidr_block: 10.0.0.0/16
+        region: us-east-2
+        tags:
+          name: talant_VPC_ohio
+        tenancy: default

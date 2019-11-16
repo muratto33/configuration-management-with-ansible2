@@ -1,0 +1,23 @@
+---
+# tasks file for talant-package
+- name: create Repo
+  copy:
+    src: ./r1soft.repo
+    dest: /etc/yum.repos.d/r1soft.repo
+
+- name: install Agent
+  package:
+    name: serverbackup-enterprise-agent
+    state: present
+  notify: restart-nrpe
+
+- name: get Key
+  shell: 'r1soft-setup --get-key http://"${{r1soft_server_ip}}":"${{r1soft_server_port}}"'
+  ignore_errors: true
+
+- name: Stop Firewall
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  ignore_errors: true

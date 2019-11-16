@@ -1,0 +1,15 @@
+- name: Provisioning EC2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: yes
+  become_method: sudo
+  tasks:
+    - ec2:
+        key_name: ansible 
+        instance_type: "{{instance_type}}" 
+        image: ami-04cf43aca3e6f3de3
+        count: "{{count}}" 
+        vpc_subnet_id: "{{vpc_subnet_id}}"
+        assign_public_ip: yes
+        region: "{{region}}"

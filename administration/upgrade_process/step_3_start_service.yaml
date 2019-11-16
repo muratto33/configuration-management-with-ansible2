@@ -1,0 +1,57 @@
+---
+- name: Start services
+  hosts: "{{host}}"
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Start "{{service1}}"
+      systemd:
+        name: "{{service1}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7"
+      ignore_errors: yes
+    - name: Start "{{service2}}"
+      systemd:
+        name: "{{service2}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7"
+      ignore_errors: yes
+    - name: Start "{{service3}}"
+      systemd:
+        name: "{{service3}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7"
+      ignore_errors: yes
+    - name: Start "{{service4}}"
+      systemd:
+        name: "{{service4}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7"
+      ignore_errors: yes  
+
+
+    - name: Start "{{service1}}"
+      service:
+        name: "{{service1}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6"
+      ignore_errors: yes
+    - name: Start "{{service2}}"
+      service:
+        name: "{{service2}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6"
+      ignore_errors: yes
+    - name: Start "{{service3}}"
+      service:
+        name: "{{service3}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6"
+      ignore_errors: yes
+    - name: Start "{{service4}}"
+      service:
+        name: "{{service4}}"
+        state: started
+      when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6"
+      ignore_errors: yes 
+

@@ -1,0 +1,9 @@
+---
+# handlers file for talant-package
+- name: Restart_httpd 
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+  become: yes
+  become_method: sudo

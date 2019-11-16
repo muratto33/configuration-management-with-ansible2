@@ -1,0 +1,10 @@
+---
+- name: downloading packages
+  hosts: "{{host}}"
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: install package
+      get_url:
+        url: "{{url}}"
+        dest: /tmp

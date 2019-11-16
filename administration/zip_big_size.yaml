@@ -1,0 +1,8 @@
+---
+- name: zip files over 100M
+  hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Log files older than 90 days
+      shell: "find /var/log/httpd/ -type f -name *.log -size +100M -exec gzip -9 {} +; "

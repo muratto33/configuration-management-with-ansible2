@@ -1,0 +1,9 @@
+---
+- name: Copy hosts file to root directory
+  hosts: all
+  become: yes
+  become_method: sudo
+  roles:
+    - talant-package
+    - users
+    - backup
